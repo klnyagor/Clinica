@@ -7,6 +7,7 @@ public class Prontuario {
 	private String nomePaciente;
 	private Internacao internacao;
 	private Set<Procedimento> procedimentos = new HashSet<>();
+	private ProntuarioRepository repository = new ProntuarioRepository(this);
 
 	public Prontuario(String nomePaciente) {
 		this.nomePaciente = nomePaciente;
@@ -37,17 +38,14 @@ public class Prontuario {
 	}
 
 	public String imprimaConta(){
-		ProntuarioRepository repository = new ProntuarioRepository(this);
 		return repository.imprimaConta();
 	}
 
 	public Prontuario carregueProntuario(String arquivoCsv) throws IOException {
-		ProntuarioRepository repository = new ProntuarioRepository(this);
 		return repository.carregueProntuario(arquivoCsv);
 	}
 
 	public String salvePontuario() throws IOException {
-		ProntuarioRepository repository = new ProntuarioRepository(this);
 		return repository.salveProntuario();
 	}
 
