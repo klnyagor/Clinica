@@ -6,7 +6,6 @@ import Leito.Enfermaria;
 import Procedimento.Avancado;
 import Procedimento.Basico;
 import Procedimento.Comum;
-import Procedimento.TipoProcedimento;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -112,28 +111,28 @@ public class ProntuarioTest {
 		assertEquals(respostaEsperada, prontuario.imprimaConta());
 	}
 
-	@Test
-	public void testCarregarArquivoSemInternacao() {
-		String path = "src/test/resources/prontuario_exportado_sem_internacao.csv";
+	// @Test
+	// public void testCarregarArquivoSemInternacao() {
+	// 	String path = "src/test/resources/prontuario_exportado_sem_internacao.csv";
 
-		Prontuario prontuario = null;
+	// 	Prontuario prontuario = null;
 
-		try {
-			prontuario = new Prontuario(null).carregueProntuario(path);
-		} catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
+	// 	try {
+	// 		prontuario = new Prontuario(null).carregueProntuario(path);
+	// 	} catch (IOException ioException) {
+	// 		ioException.printStackTrace();
+	// 	}
 
-		assertEquals("Ermenegildo Godofredo", prontuario.getNomePaciente());
-		assertNull(prontuario.getInternacao());
+	// 	assertEquals("Ermenegildo Godofredo", prontuario.getNomePaciente());
+	// 	assertNull(prontuario.getInternacao());
 
-		Map<TipoProcedimento, Long> procedimentosAgrupados = prontuario.getProcedimentos().stream().collect(
-				Collectors.groupingBy(Procedimento::getTipoProcedimento, Collectors.counting()));
+	// 	Map<TipoProcedimento, Long> procedimentosAgrupados = prontuario.getProcedimentos().stream().collect(
+	// 			Collectors.groupingBy(Procedimento::getTipoProcedimento, Collectors.counting()));
 
-		assertEquals(10L, procedimentosAgrupados.get(new Basico()).longValue());
-		assertEquals(2L, procedimentosAgrupados.get(new Comum()).longValue());
-		assertNull(procedimentosAgrupados.get(new Avancado()));
-	}
+	// 	assertEquals(10L, procedimentosAgrupados.get(new Basico()).longValue());
+	// 	assertEquals(2L, procedimentosAgrupados.get(new Comum()).longValue());
+	// 	assertNull(procedimentosAgrupados.get(new Avancado()));
+	// }
 
 	@Test
 	public void testCarregarArquivoSemInternacaoNovo() {
@@ -158,25 +157,25 @@ public class ProntuarioTest {
 		assertNull(procedimentosAgrupados.get(new Avancado().getTipo()));
 	}
 
-	@Test
-	public void testCarregarArquivoSemProcedimentos() {
-		String path = "src/test/resources/prontuario_exportado_sem_procedimentos.csv";
+	// @Test
+	// public void testCarregarArquivoSemProcedimentos() {
+	// 	String path = "src/test/resources/prontuario_exportado_sem_procedimentos.csv";
 
-		Prontuario prontuario = null;
+	// 	Prontuario prontuario = null;
 
-		try {
-			prontuario = new Prontuario(null).carregueProntuario(path);
-		} catch (IOException ioException) {
-			ioException.printStackTrace();
-			fail(ioException.getMessage());
-		}
+	// 	try {
+	// 		prontuario = new Prontuario(null).carregueProntuario(path);
+	// 	} catch (IOException ioException) {
+	// 		ioException.printStackTrace();
+	// 		fail(ioException.getMessage());
+	// 	}
 
-		assertEquals("Ruither Silveira", prontuario.getNomePaciente());
-		assertEquals(0, prontuario.getProcedimentos().size());
-		Internacao internacao = prontuario.getInternacao();
-		assertEquals(10, internacao.getQtdeDias());
-		assertEquals(new Apartamento(), internacao.getTipoLeito());
-	}
+	// 	assertEquals("Ruither Silveira", prontuario.getNomePaciente());
+	// 	assertEquals(0, prontuario.getProcedimentos().size());
+	// 	Internacao internacao = prontuario.getInternacao();
+	// 	assertEquals(10, internacao.getQtdeDias());
+	// 	assertEquals(new Apartamento(), internacao.getTipoLeito());
+	// }
 
 	@Test
 	public void testCarregarArquivoSemProcedimentosNovo() {
@@ -198,30 +197,30 @@ public class ProntuarioTest {
 		assertEquals(new Apartamento().getTipo(), internacao.getTipo());
 	}
 
-	@Test
-	public void testCarregarArquivoCompleto() {
-		String path = "src/test/resources/prontuario_exportado_completo.csv";
+	// @Test
+	// public void testCarregarArquivoCompleto() {
+	// 	String path = "src/test/resources/prontuario_exportado_completo.csv";
 
-		Prontuario prontuario = null;
+	// 	Prontuario prontuario = null;
 
-		try {
-			prontuario = new Prontuario(null).carregueProntuario(path);
-		} catch (IOException ioException) {
-			ioException.printStackTrace();
-		}
+	// 	try {
+	// 		prontuario = new Prontuario(null).carregueProntuario(path);
+	// 	} catch (IOException ioException) {
+	// 		ioException.printStackTrace();
+	// 	}
 
-		assertEquals("Adalgisa da Silva", prontuario.getNomePaciente());
-		Internacao internacao = prontuario.getInternacao();
-		assertEquals(20, internacao.getQtdeDias());
-		assertEquals(new Enfermaria(), internacao.getTipoLeito().getClass());
+	// 	assertEquals("Adalgisa da Silva", prontuario.getNomePaciente());
+	// 	Internacao internacao = prontuario.getInternacao();
+	// 	assertEquals(20, internacao.getQtdeDias());
+	// 	assertEquals(new Enfermaria(), internacao.getTipoLeito().getClass());
 
-		Map<TipoProcedimento, Long> procedimentosAgrupados = prontuario.getProcedimentos().stream().collect(
-				Collectors.groupingBy(Procedimento::getTipoProcedimento, Collectors.counting()));
+	// 	Map<TipoProcedimento, Long> procedimentosAgrupados = prontuario.getProcedimentos().stream().collect(
+	// 			Collectors.groupingBy(Procedimento::getTipoProcedimento, Collectors.counting()));
 
-		assertEquals(20L, procedimentosAgrupados.get(new Basico()).longValue());
-		assertEquals(15L, procedimentosAgrupados.get(new Avancado()).longValue());
-		assertNull(procedimentosAgrupados.get(new Comum()));
-	}
+	// 	assertEquals(20L, procedimentosAgrupados.get(new Basico()).longValue());
+	// 	assertEquals(15L, procedimentosAgrupados.get(new Avancado()).longValue());
+	// 	assertNull(procedimentosAgrupados.get(new Comum()));
+	// }
 
 	@Test
 	public void testCarregarArquivoCompletoNovo() {
